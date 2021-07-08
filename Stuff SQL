@@ -1,0 +1,128 @@
+-- drop table if exists
+Drop Table IF Exists stuff; 
+
+-- create new table while determining data types 
+Create Table stuff (
+	name VARCHAR,
+	image VARCHAR,
+	class VARCHAR,
+	subclass VARCHAR,
+	tags VARCHAR,
+	durability INT,
+	strength INT,
+	range INT,
+	arrows INT,
+	defense INT,
+	defense_upgrade_lvl1 INT,
+	defense_upgrade_lvl2 INT,
+	defense_upgrade_lvl3 INT,
+	defense_upgrade_lvl4 INT,
+	bonus VARCHAR,
+	description VARCHAR,
+	selling_price  INT,
+	bonus_set VARCHAR,
+	upgrade_1 VARCHAR,
+	upgrade_2 VARCHAR,
+	upgrade_3 VARCHAR,
+	upgrade_4 VARCHAR,
+	armor_upgrade VARCHAR,
+	where_to_find VARCHAR,
+	notes VARCHAR
+); 
+
+-- check table was created successfully 
+Select * From stuff ; 
+
+upload csv files into table 
+
+-- check information was uploaded successfully 
+Select * From stuff ;  
+
+-- create new tables based on weapon class
+CREATE TABLE weapon AS
+Select 
+	name, 
+	class, 
+	subclass,
+	durability, 
+	strength, 
+	description
+From stuff
+Where class = 'Weapon' ;
+
+-- spot checking columns for nulls 
+Select * From weapon; 
+
+-- drop table weapon and replace with cleaned version 
+Drop Table weapon ; 
+
+-- -- creating new table that replaced null values with empty cells
+CREATE TABLE weapon1 AS
+Select 
+	name, 
+	class, 
+	subclass,
+	COALESCE(CAST(durability as VARCHAR(20)),'') as durability, 
+	strength, 
+	description
+From stuff
+Where class = 'Weapon' ;
+
+Select * From weapon1;
+-- confirmed new weapon table is clean 
+
+-- create new tables based on shield class
+CREATE TABLE shield AS 
+Select 
+	name, 
+	class, 
+	durability, 
+	strength, 
+	description
+	from stuff
+Where Class = 'Shield' ;
+
+-- spot checking columns for nulls 
+Select * From shield; 
+-- no null values in shield table 
+
+-- rename shield table to match the other version 1 names in database 
+Alter Table shield 
+Rename To shield1 ; 
+
+
+
+-- create new tables based on bow class
+CREATE TABLE bow AS 
+Select
+	name, 
+	class,
+	subclass,
+	durability, 
+	strength, 
+	range as arrows_per_shot, 
+	description
+From stuff
+Where class = 'Bow' ; 
+
+-- spot checking columns for nulls 
+Select * From bow ; 
+
+-- drop table weapon and replace with cleaned version 
+Drop Table bow ; 
+
+-- creating new table that replaced null values with empty cells
+CREATE TABLE bow1 AS 
+Select
+	name, 
+	class,
+	COALESCE(subclass,'') as subclass, 
+	COALESCE(CAST(durability as VARCHAR(20)),'') as durability, 
+	COALESCE(CAST(strength as VARCHAR(20)),'') as strength, 
+	COALESCE(CAST(range as VARCHAR(20)),'') as arrows_per_shot, 
+	COALESCE(description,'') as description
+From stuff
+Where class = 'Bow' ; 
+
+Select * From bow1;
+-- confirmed new bow table is clean 

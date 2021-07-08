@@ -1,0 +1,82 @@
+-- drop table if exists
+Drop Table IF Exists food; 
+
+-- create new table while determining data types 
+Create Table food (
+	name VARCHAR,
+	image VARCHAR,
+	class VARCHAR,
+	subclass VARCHAR,
+	description VARCHAR,
+	ingredients VARCHAR, 
+	hp FLOAT, 
+	effect VARCHAR
+); 
+
+-- check table was created successfully 
+Select * From food ; 
+
+--upload csv files into table 
+
+-- check information was uploaded successfully 
+Select * From food ; 
+
+-- drop unwanted columns
+Alter Table food
+Drop Column image ;
+
+-- check unwanted columns were dropped successfully 
+Select * From food ; 
+ 
+--  check columns for nulls
+
+Select * 
+From food
+Where name is null ; 
+-- no null values in name
+
+Select * 
+From food
+Where class is null ; 
+-- no null values in class
+
+Select * 
+From food
+Where subclass is null ; 
+-- no null values in subclass
+
+Select * 
+From food
+Where description is null ; 
+-- null values in description 
+
+Select * 
+From food
+Where ingredients is null ; 
+-- no null values ingredients
+
+Select * 
+From food
+Where hp is null ; 
+-- -- null values in hp 
+
+Select * 
+From food
+Where effect is null ; 
+-- null values in effect 
+
+-- -- creating new table that replaced null values with empty cells
+CREATE TABLE food1 AS
+Select
+	name,
+	class,
+	subclass,
+	COALESCE(description ,'') as description, 
+	ingredients,
+	COALESCE(CAST(hp as VARCHAR(20)),'') as hp, 
+	COALESCE(effect,'') as effect
+From 
+	food ;
+
+Select * from food1 ; 
+-- confirmed new food table is cleand 

@@ -1,0 +1,129 @@
+-- drop table if exists
+Drop Table IF Exists material; 
+
+-- create new table while determining data type
+Create Table material (
+	name VARCHAR, 
+	image VARCHAR,
+	class VARCHAR,
+	subclass VARCHAR,
+	tags VARCHAR,
+	description VARCHAR,
+	hp FLOAT,
+	hp_backed FLOAT,
+	hp_cooked FLOAT, 
+	effect_cooked VARCHAR,
+	quality_lvl INT, 
+	potential Float,
+	duration_bonus_cooked VARCHAR ,
+	selling_price INT, 
+	selling_mon INT, 
+	dye_color VARCHAR,
+	food_recipe VARCHAR,
+	armor_upgrade VARCHAR,
+	compendium_id VARCHAR,
+	notes VARCHAR,
+	buying_price VARCHAR,
+	shop VARCHAR
+); 
+
+-- check table was created successfully 
+Select * From material
+
+-- upload csv files into table 
+
+-- check information was uploaded successfully 
+Select * From material 
+
+-- drop unwanted columns
+Alter Table material
+Drop Column image,
+Drop Column tags,
+Drop Column quality_lvl,
+Drop Column potential,
+Drop Column selling_mon,
+Drop Column dye_color,
+Drop Column armor_upgrade, 
+Drop Column compendium_id, 
+Drop Column notes, 
+Drop Column buying_price, 
+Drop Column shop;
+
+-- check unwanted columns were dropped successfully 
+Select * From material
+
+--  check columns for nulls
+
+Select * 
+From material
+Where name is null ; 
+-- no null values in name
+
+Select * 
+From material
+Where class is null ; 
+-- no null values in class
+
+Select * 
+From material
+Where subclass is null ; 
+-- null values in subclass
+
+Select * 
+From material
+Where description is null ;
+-- null values in description 
+
+Select * 
+From material
+Where hp is null ;
+-- null values in hp
+
+Select * 
+From material
+Where hp_backed is null ;
+-- null values in hp_backed
+
+Select * 
+From material
+Where hp_cooked is null ;
+-- null values in hp_cooked
+
+Select * 
+From material
+Where effect_cooked is null ;
+-- null values in effect_cooked
+
+Select * 
+From material
+Where duration_bonus_cooked is null ;
+-- null values in duration_bonus_cooked
+
+Select * 
+From material
+Where selling_price is null ;
+-- null values in selling_price
+
+Select * 
+From material
+Where food_recipe is null ;
+-- null values in food_recipe
+
+-- -- creating new table that replaced null values with empty cells
+CREATE TABLE material1 AS 
+Select 
+	name, 
+	class,
+	COALESCE(subclass,'') as subclass,
+	COALESCE(description,'') as description,
+	COALESCE(CAST(hp as VARCHAR(20)),'') as hp,
+	COALESCE(CAST(hp_backed as VARCHAR(20)),'') as hp_backed,
+	COALESCE(CAST(hp_cooked as VARCHAR(20)),'') as hp_cooked,
+	COALESCE(effect_cooked,'') as effect_cooked,
+	COALESCE(duration_bonus_cooked,'') as duration_bonus_cooked,
+	COALESCE(CAST(selling_price as VARCHAR(20)),'') as selling_price,
+	COALESCE(food_recipe,'') as food_recipe
+From material ; 
+
+Select * from material1 ; 
+-- confirmed new material table is clean
